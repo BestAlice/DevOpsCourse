@@ -1,18 +1,7 @@
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
-using BooksLab;
-using BooksLab.Books;
-using BooksLab.ConsoleCommands;
-using BooksLab.Interface;
 using DinoServer.Interfaces;
 using DinoServer.Services;
 using DinoServer.Users;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Parameters;
-using Org.BouncyCastle.OpenSsl;
-using Org.BouncyCastle.Security;
 
 namespace DinoServer;
 class Program
@@ -29,14 +18,6 @@ class Program
 
         builder.Services.AddControllers();
         
-        // Настройка Kestrel для использования самоподписанного сертификата
-        /*builder.WebHost.UseKestrel(options =>
-        {
-            options.ListenAnyIP(7151, listenOptions =>
-            {
-                listenOptions.UseHttps(LoadCertificate());
-            });
-        });*/
 
         var app = builder.Build();
         app.UseDeveloperExceptionPage();

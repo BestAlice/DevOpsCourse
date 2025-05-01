@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                     users?.let {
                         // Обработка списка пользователей
                         println(it);
-                        Users = it;
+                        Users = it.sortedByDescending { it.score };
                         fillTable(Users);
                     }
                 } else {
