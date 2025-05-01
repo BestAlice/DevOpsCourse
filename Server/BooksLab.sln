@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksLab", "BooksLab\BooksLab.csproj", "{9AF7A495-691E-4409-8B3D-2FB7CCC141D3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksTest", "BooksTest\BooksTest.csproj", "{22405385-1E9D-4B6E-93DD-753D882E650C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinoTest", "DinoTest\DinoTest.csproj", "{22405385-1E9D-4B6E-93DD-753D882E650C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinoServer", "DinoServer\DinoServer.csproj", "{9CD59BBD-E85A-4230-A3D8-60CF1568C857}"
 EndProject
@@ -12,10 +10,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9AF7A495-691E-4409-8B3D-2FB7CCC141D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AF7A495-691E-4409-8B3D-2FB7CCC141D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AF7A495-691E-4409-8B3D-2FB7CCC141D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AF7A495-691E-4409-8B3D-2FB7CCC141D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22405385-1E9D-4B6E-93DD-753D882E650C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22405385-1E9D-4B6E-93DD-753D882E650C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22405385-1E9D-4B6E-93DD-753D882E650C}.Release|Any CPU.Build.0 = Release|Any CPU

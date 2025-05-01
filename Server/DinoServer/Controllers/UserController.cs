@@ -1,13 +1,9 @@
 using System.Security.Cryptography;
-using BooksLab.Books;
-using BooksLab.ConsoleCommands;
 using DinoServer.Interfaces;
 using DinoServer.Services;
 using DinoServer.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Query.ExpressionVisitors.Internal;
-using SQLitePCL;
 
 namespace DinoServer.Controllers;
 /*

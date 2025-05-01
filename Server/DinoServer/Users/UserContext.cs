@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 
 namespace DinoServer.Users;
-using BooksLab.Interface;
-
 
 public class UserContext : DbContext
 {
