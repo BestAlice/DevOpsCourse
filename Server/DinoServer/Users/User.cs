@@ -1,38 +1,26 @@
-namespace BooksLab.Books;
+namespace DinoServer.Users;
 
 public class User
 {
-    public int Id { get; set; }          // Первичный ключ
-    public  string Title { get; set; }        // название
-    public  string Author { get; set; }      // автор
-    public  List<string> Genres  { get; set; } // жанры
-    public  int PublicationYear  { get; set; } // год публикации
-    public  string Annotation { get; set; }   // аннотация
-    public  string ISBN  { get; set; }         // ISBN
-    public  int UserId  { get; set; }          // Идентификатор пользователя
+    public int Id { get; set; }          
+    public  string Name { get; set; }        
+    public  int Score  { get; set; } 
     
     public User()
     {
-        Genres = new List<string>();
+        
     }
-    /* Конструктор класса Book
-    Принимает в себя название, автора, жанры, дату публикации, аннотации,
-    ISBN и идентификатор пользователя */
-    public User(string title, string author, List<string> genres, int publicationYear, string annotation, string isbn, int userId)
+    /* Конструктор класса */
+    public User(string name, int score)
     {
-        Title = title;
-        Author = author;
-        Genres = genres;
-        PublicationYear = publicationYear;
-        Annotation = annotation;
-        ISBN = isbn;
-        UserId = userId;
+        Name = name;
+        Score = score;
     }
 
     // Перегрузка функции ToString
     public override string ToString()
     {
-        return $"{Title}, {Author}, {string.Join(", ", Genres)}, {PublicationYear}, ISBN: {ISBN}";
+        return $"{Name}, {Score}";
     }
     
     public override bool Equals(object obj)
@@ -41,15 +29,12 @@ public class User
             return false;
 
         var book = (User)obj;
-        return Title == book.Title &&
-               Author == book.Author &&
-               Genres == book.Genres &&
-               PublicationYear == book.PublicationYear &&
-               ISBN == book.ISBN;
+        return Name == book.Name &&
+               Score == book.Score;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Title, Author, Genres, PublicationYear, ISBN);
+        return HashCode.Combine(Name, Score);
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 
-namespace BooksLab.Books;
+namespace DinoServer.Users;
 using BooksLab.Interface;
 
 
@@ -15,7 +15,7 @@ public class UserContext : DbContext
     private readonly DbContextOptions<UserContext> _configureOptions;
 
     //Set через который происходит взаимодействие с БД
-    public DbSet<User> Books => Set<User>();
+    public DbSet<User> Users => Set<User>();
 
 
     public UserContext(DbContextOptions<UserContext> configureOptions) : base(configureOptions)
@@ -40,7 +40,7 @@ public class UserContext : DbContext
     //синхронное добавление книги в БД
     public void AddBook(User user)
     {
-        Books.Add(user);
+        Users.Add(user);
         SaveChanges();
         Console.WriteLine("Книга добавлена в каталог!");
     }
@@ -48,7 +48,7 @@ public class UserContext : DbContext
     //Ассинхронное добавление книги в БД
     public async Task<User> AddBookAsync(User user)
     {
-        await Books.AddAsync(user);
+        await Users.AddAsync(user);
         await SaveChangesAsync();
         Console.WriteLine("Книга добавлена в каталог!");
         return user;

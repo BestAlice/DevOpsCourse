@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         tableLayout = findViewById(R.id.tableLayout);
 
-        //fetchUsers();
+        fetchUsers();
     }
 
     inner class WebAppInterface {

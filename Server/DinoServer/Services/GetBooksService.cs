@@ -1,4 +1,4 @@
-using BooksLab.Books;
+using DinoServer.Users;
 using DinoServer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +16,6 @@ public class GetBooksService : IGetBooksService
     public async Task<IEnumerable<User>> GetBooksAsync()
     {
         await using var db = _contextFactory.CreateDbContext();
-        return await db.Books.ToListAsync();
+        return await db.Users.ToListAsync();
     }
 }

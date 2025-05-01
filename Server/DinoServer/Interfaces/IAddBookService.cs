@@ -1,4 +1,5 @@
 using BooksLab.Books;
+using DinoServer.Users;
 
 namespace DinoServer.Interfaces;
 

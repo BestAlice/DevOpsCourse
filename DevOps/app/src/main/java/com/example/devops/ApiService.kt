@@ -8,9 +8,9 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
-    @POST("updateScore")
+    @POST("api/user/addscore")
     suspend fun updateScore(@Body user: User): Response<Void>
 
-    @GET("users")
+    @GET("api/user/getusers")
     fun getAllUsers(): Call<List<User>>
 }

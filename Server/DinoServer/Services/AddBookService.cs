@@ -1,5 +1,6 @@
 using BooksLab.Books;
 using DinoServer.Interfaces;
+using DinoServer.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace DinoServer.Services;
@@ -19,8 +20,6 @@ public class AddBookService : IAddBookService
         {
             throw new ArgumentException("Book data is invalid.");
         }
-
-        user.UserId = userId;
         await using var db = _contextFactory.CreateDbContext();
         await db.AddBookAsync(user);
         return user;
