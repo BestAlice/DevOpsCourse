@@ -18,21 +18,21 @@ namespace DinoServer.Controllers;
 [Route("/api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly IGetBooksService _getBooksService;
-    private readonly IAddBookService _addBookService;
+    private readonly IGetUsersService _getUsersService;
+    private readonly IAddUserService _addUserService;
 
     public UserController(
-        IGetBooksService getBooksService,
-        IAddBookService addBookService)
+        IGetUsersService getUsersService,
+        IAddUserService addUserService)
     {
-        _getBooksService = getBooksService;
-        _addBookService = addBookService;
+        _getUsersService = getUsersService;
+        _addUserService = addUserService;
     }
 
     [HttpGet("getusers")]
     public async Task<ActionResult<IEnumerable<User>>> Get()
     {
-        var books = await _getBooksService.GetBooksAsync();
+        var books = await _getUsersService.GetUsersAsync();
         return Ok(books);
     }
 
@@ -41,7 +41,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            var addedBook = await _addBookService.AddBookAsync(user, userId);
+            var addedBook = await _addUserService.AddUserAsync(user, userId);
             return Ok(addedBook);
         }
         catch (ArgumentException ex)

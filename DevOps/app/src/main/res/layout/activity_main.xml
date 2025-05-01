@@ -20,12 +20,6 @@
         android:layout_height="wrap_content"
         android:hint="Ваше имя" />
 
-    <Button
-        android:id="@+id/buttonGetText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Получить текст" />
-
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

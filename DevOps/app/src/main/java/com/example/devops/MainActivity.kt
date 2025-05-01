@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.core.text.set
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,8 +25,6 @@ class MainActivity : AppCompatActivity() {
     private val apiService = RetrofitClient.instance;
     private lateinit var tableLayout: TableLayout
 
-    private var id = 2;
-
     private lateinit var Users: List<User>;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,14 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         webView=findViewById(R.id.wv);
         editText = findViewById(R.id.editText);
-        buttonGetText = findViewById(R.id.buttonGetText);
-        buttonGetText.setOnClickListener {
-            val inputText = editText.text.toString()
-            // Используйте значение inputText по вашему усмотрению
-            //val newUser = User(++id, inputText, 1000);
-            //Users = listOf(newUser);
-            //fillTable(listOf(newUser));
-        }
+        editText.setText("user");
 
         webView.addJavascriptInterface(WebAppInterface(), "Android")
         webView.settings.javaScriptEnabled = true;

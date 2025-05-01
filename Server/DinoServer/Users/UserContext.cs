@@ -46,7 +46,7 @@ public class UserContext : DbContext
     }
     
     //Ассинхронное добавление книги в БД
-    public async Task<User> AddBookAsync(User user)
+    public async Task<User> AddUserAsync(User user)
     {
         await Users.AddAsync(user);
         await SaveChangesAsync();
