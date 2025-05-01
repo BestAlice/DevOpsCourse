@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val apiService = RetrofitClient.instance;
     private lateinit var tableLayout: TableLayout
 
-    private var id = 0;
+    private var id = 2;
 
     private lateinit var Users: List<User>;
 
@@ -37,9 +37,9 @@ class MainActivity : AppCompatActivity() {
         buttonGetText.setOnClickListener {
             val inputText = editText.text.toString()
             // Используйте значение inputText по вашему усмотрению
-            val newUser = User(++id, inputText, 1000);
+            //val newUser = User(++id, inputText, 1000);
             //Users = listOf(newUser);
-            fillTable(listOf(newUser));
+            //fillTable(listOf(newUser));
         }
 
         webView.addJavascriptInterface(WebAppInterface(), "Android")
@@ -67,14 +67,23 @@ class MainActivity : AppCompatActivity() {
             // Используйте значение inputText по вашему усмотрению
             //Users = listOf(User(++id, inputText, intDist));
             //fillTable(Users);
-            fillTable(listOf(User(43, inputText, intDist)));
+            //fillTable(listOf(User(43, inputText, intDist)));
+            CoroutineScope(Dispatchers.IO).launch {
+
+
+                updateUserScore(User(null, inputText, intDist));
+            }
         }
     }
 
     fun fillTable(allUsers: List<User> ){
         runOnUiThread{
+            tableLayout.removeAllViews()
+
             for (user in allUsers) {
                 val tableRow = TableRow(this)
+                //tableRow.removeAllViews();
+
                 tableRow.layoutParams = TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.WRAP_CONTENT
@@ -122,20 +131,27 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+
     suspend fun updateUserScore(user: User) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = apiService.updateScore(user)
-                if (response.isSuccessful) {
-                    println("Score updated successfully")
-                } else {
+        try {
+            val response = apiService.updateScore(user)
+
+            if (response.isSuccessful) {
+                runOnUiThread {
+                    println("Score updated!")
+                    fetchUsers() // Обновляем таблицу после успешного обновления
+                }
+            } else {
+                runOnUiThread {
                     println("Error: ${response.errorBody()}")
                 }
-            } catch (e: Exception) {
+            }
+        } catch (e: Exception) {
+            runOnUiThread {
                 println("Exception: ${e.message}")
             }
         }
-        }
+    }
 
 
 }

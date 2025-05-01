@@ -1,7 +1,9 @@
 package com.example.devops
+import com.google.gson.annotations.SerializedName
 
 data class User(
-    val id: Int,
-    val name: String,
-    val score: Int
+    @SerializedName("id") val id: Int? = null,
+    @SerializedName("name") val name: String,
+    @SerializedName("score") val score: Int
+    // Добавьте другие поля, если они есть на сервере
 )
