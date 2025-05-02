@@ -13,7 +13,7 @@ public class UserContext : DbContext
     private readonly DbContextOptions<UserContext> _configureOptions;
 
     //Set через который происходит взаимодействие с БД
-    public DbSet<User> Users => Set<User>();
+    public virtual DbSet<User> Users => Set<User>();
 
 
     public UserContext(DbContextOptions<UserContext> configureOptions) : base(configureOptions)

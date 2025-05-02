@@ -17,15 +17,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView;
     private lateinit var editText: EditText
     private lateinit var buttonGetText: Button
     private var url = "file:///android_asset/index.html";
-    private val apiService = RetrofitClient.instance;
-    private lateinit var tableLayout: TableLayout
+    internal lateinit var apiService: ApiService;
+    internal lateinit var tableLayout: TableLayout
 
-    private lateinit var Users: List<User>;
+    internal lateinit var Users: List<User>;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         editText = findViewById(R.id.editText);
         editText.setText("user");
 
+        apiService =  RetrofitClient.instance;
         webView.addJavascriptInterface(WebAppInterface(), "Android")
         webView.settings.javaScriptEnabled = true;
         webView.loadUrl(url);
