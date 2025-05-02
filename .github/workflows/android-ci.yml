@@ -27,26 +27,15 @@ jobs:
       uses: gradle/wrapper-validation-action@v1
     
     - name: Cache Gradle dependencies
-  uses: actions/cache@v3
-  with:
-    path: |
-      ~/.gradle/caches
-      ~/.gradle/wrapper
-    key: ${{ runner.os }}-gradle-${{ hashFiles('DevOps/gradle/wrapper/gradle-wrapper.properties', 'DevOps/build.gradle') }}
-    restore-keys: |
-      ${{ runner.os }}-gradle-
-
-    - name: Cache Android SDK
-      if: runner.os == 'Linux'  # SDK кэшируется только для Linux
       uses: actions/cache@v3
       with:
         path: |
-          ~/.android/build-cache
-          ~/.android/cache
-        key: ${{ runner.os }}-android-sdk-${{ secrets.ANDROID_SDK_VERSION }}
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('DevOps/gradle/wrapper/gradle-wrapper.properties', 'DevOps/build.gradle') }}
         restore-keys: |
-          ${{ runner.os }}-android-sdk-
-
+          ${{ runner.os }}-gradle-
+    
     - name: Cache Gradle build
       uses: actions/cache@v3
       with:
