@@ -32,5 +32,17 @@ public class UserContextTest
         Assert.That(result, Is.Not.Zero);
         Assert.That(result, Is.EqualTo(4));
     }
+    
+    [Test]
+    public void TwoPlusThreeTest()
+    {
+        //совершаешь необходимые операции для теста
+        int result = 2+3;
+        
+        // проверяешь что результат соответсвует ожидаемому 
+        // в Is. целая куча возможностей. можешь искать желаемое и юзать
+        Assert.That(result, Is.Not.Zero);
+        Assert.That(result, Is.EqualTo(5));
+    }
 }
 
