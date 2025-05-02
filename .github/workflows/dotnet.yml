@@ -7,7 +7,7 @@ on:
     branches: [ "main"]  # Триггер на PR в эти ветки
 
 jobs:
-  build-and-test:
+  NET-build-and-test:
     runs-on: windows-latest   # ubuntu-latest или windows-latest, macos-latest
 
     steps:
@@ -17,7 +17,14 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'  # Укажите вашу версию .NET (6.0, 7.0, 8.0)
-
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+          
     - name: Restore dependencies
       run: dotnet restore ./Server/BooksLab.sln
 
