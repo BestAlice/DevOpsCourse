@@ -1,0 +1,28 @@
+name: .NET CI
+
+on:
+  push:
+    branches: [ "main"]  # Триггер на пуши в эти ветки
+  pull_request:
+    branches: [ "main"]  # Триггер на PR в эти ветки
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest   # ubuntu-latest или windows-latest, macos-latest
+
+    steps:
+    - uses: actions/checkout@v4  # Клонирует репозиторий
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'  # Укажите вашу версию .NET (6.0, 7.0, 8.0)
+
+    - name: Restore dependencies
+      run: dotnet restore ./Server/BooksLab.sln
+
+    - name: Build
+      run: dotnet build ./Server/BooksLab.sln --configuration Release --no-restore
+
+    - name: Test
+      run: dotnet test ./Server/BooksLab.sln --configuration Release --no-build --verbosity normal
