@@ -2,9 +2,14 @@ name: .NET CI
 
 on:
   push:
-    branches: [ "main"]  # Триггер на пуши в эти ветки
+    branches: [ "main" ]
+    paths:
+      - 'Server/**'  # Только при изменениях здесь
   pull_request:
-    branches: [ "main"]  # Триггер на PR в эти ветки
+    branches: [ "main"]
+    paths:
+      - 'Server/**'
+
 
 jobs:
   NET-build-and-test:
