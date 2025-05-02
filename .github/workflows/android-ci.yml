@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main", "master" ]
     paths: 
-      - 'DevOps/**'  # Триггерится только при изменениях в папке DevOps
+      - 'DevOps/**'
   pull_request:
     branches: [ "main", "master" ]
     paths:
@@ -21,13 +21,13 @@ jobs:
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
-        java-version: '17'  # Или версия, указанная в вашем проекте
+        java-version: '17'
 
     - name: Validate Gradle Wrapper
-      uses: gradle/wrapper-validation-action@v1
+      uses: gradle/wrapper-validation-action@v2
     
     - name: Cache Gradle dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.gradle/caches
@@ -37,7 +37,7 @@ jobs:
           ${{ runner.os }}-gradle-
     
     - name: Cache Gradle build
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           DevOps/app/build
@@ -47,7 +47,7 @@ jobs:
           ${{ runner.os }}-gradle-build-
     
     - name: Build with Gradle
-      working-directory: ./DevOps  # Переход в папку проекта
+      working-directory: ./DevOps
       run: ./gradlew assembleDebug
 
     - name: Run tests
@@ -56,7 +56,7 @@ jobs:
 
     - name: Upload APK artifact
       if: success()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: android-apk
         path: DevOps/app/build/outputs/apk/**/*.apk
