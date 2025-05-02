@@ -1,0 +1,42 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+    paths: 
+      - 'DevOps/**'  # Триггерится только при изменениях в папке DevOps
+  pull_request:
+    branches: [ "main", "master" ]
+    paths:
+      - 'DevOps/**'
+
+jobs:
+  Android-build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'  # Или версия, указанная в вашем проекте
+
+    - name: Validate Gradle Wrapper
+      uses: gradle/wrapper-validation-action@v1
+
+    - name: Build with Gradle
+      working-directory: ./DevOps  # Переход в папку проекта
+      run: ./gradlew assembleDebug
+
+    - name: Run tests
+      working-directory: ./DevOps
+      run: ./gradlew test
+
+    - name: Upload APK artifact
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-apk
+        path: DevOps/app/build/outputs/apk/**/*.apk
