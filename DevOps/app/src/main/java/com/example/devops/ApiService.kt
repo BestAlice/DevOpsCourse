@@ -14,3 +14,5 @@ interface ApiService {
     @GET("api/user/getusers")
     fun getAllUsers(): Call<List<User>>
 }
+//https://10.0.2.2:7151/api/user/getusers
+//http://10.0.2.2:5198/api/user/getusers

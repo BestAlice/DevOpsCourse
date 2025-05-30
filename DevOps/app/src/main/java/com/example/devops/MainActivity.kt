@@ -18,9 +18,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 open class MainActivity : AppCompatActivity() {
-    private lateinit var webView: WebView;
-    private lateinit var editText: EditText
-    private lateinit var buttonGetText: Button
+    lateinit var webView: WebView;
+    lateinit var editText: EditText
+    lateinit var buttonGetText: Button
     private var url = "file:///android_asset/index.html";
     internal lateinit var apiService: ApiService;
     internal lateinit var tableLayout: TableLayout
