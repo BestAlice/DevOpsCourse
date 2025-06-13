@@ -8,6 +8,7 @@ class Program
 {
     public static void Main(string[] args)
     {
+        Console.WriteLine("Start");
         var builder = WebApplication.CreateBuilder(args);
         string con = "server=localhost;user=root;password=password;database=DinoDB;";
         var version = new MySqlServerVersion(new Version(8, 0, 11));
@@ -30,6 +31,7 @@ class Program
         app.MapControllers();
         
         app.Run();
+        Console.WriteLine("Server is working");
     }
 }
 
