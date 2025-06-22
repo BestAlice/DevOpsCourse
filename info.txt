@@ -9,3 +9,29 @@ docker push brokensun/android-builder
 
 docker tag brokensun/my-csharp-server cr.yandex/crp10cd1h16114aqlaaj/my-csharp-server
 docker push cr.yandex/crp10cd1h16114aqlaaj/my-csharp-server
+
+docker tag brokensun/android-builder cr.yandex/crp10cd1h16114aqlaaj/android-builder
+docker push cr.yandex/crp10cd1h16114aqlaaj/android-builder
+
+docker tag brokensun/dino-server  cr.yandex/crp10cd1h16114aqlaaj/dino-server
+docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server
+
+
+docker tag server-dino-server:latest cr.yandex/crp10cd1h16114aqlaaj/server-dino-server:latest
+docker push cr.yandex/crp10cd1h16114aqlaaj/server-dino-server:latest
+docker tag mysql:8.0 cr.yandex/crp10cd1h16114aqlaaj/mysql:8.0
+docker push cr.yandex/crp10cd1h16114aqlaaj/mysql:8.0
+
+
+
+
+
+terraform apply
+ssh -i ~/.ssh/id_ed25519 ubuntu@89.169.162.5
+ssh -i ~/.ssh/id_ed25519 ubuntu@89.169.162.5
+
+Перейдите в Managed Service for Kubernetes → Создать кластер.
+Выберите конфигурацию (достаточно 1-2 нод типа standard-v2 с 2-4 vCPU).
+Укажите сеть и подсеть (если их нет, создайте автоматически).
+Нажмите Создать кластер.
+
