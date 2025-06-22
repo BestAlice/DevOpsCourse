@@ -19,3 +19,4 @@ WORKDIR /app
 COPY --from=build /app .
 EXPOSE 80
 ENTRYPOINT ["dotnet", "DinoServer.dll"]
+

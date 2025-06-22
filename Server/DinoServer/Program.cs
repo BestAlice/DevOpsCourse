@@ -10,7 +10,9 @@ class Program
     {
         Console.WriteLine("Start");
         var builder = WebApplication.CreateBuilder(args);
-        string con = "server=localhost;user=root;password=password;database=DinoDB;";
+        string con =
+            $"server={Environment.GetEnvironmentVariable("DB_SERVER")};user={Environment.GetEnvironmentVariable("DB_USER")};password={Environment.GetEnvironmentVariable("DB_PASSWORD")};database={Environment.GetEnvironmentVariable("DB_NAME")};"; 
+            //"server=localhost;user=root;password=password;database=DinoDB;";
         var version = new MySqlServerVersion(new Version(8, 0, 11));
         builder.Services.AddDbContextFactory<UserContext>(options => options.UseMySql(con, version));
         

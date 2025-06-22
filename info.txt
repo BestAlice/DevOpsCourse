@@ -1,1 +1,11 @@
 net start mysql80
+net start mysql84
+
+docker run -d -p 5198:80 --name my-csharp-server-inst Dino-server
+
+docker run -d -p 7151:5198 --name dino-server-2 my-csharp-server
+
+docker push brokensun/android-builder
+
+docker tag brokensun/my-csharp-server cr.yandex/crp10cd1h16114aqlaaj/my-csharp-server
+docker push cr.yandex/crp10cd1h16114aqlaaj/my-csharp-server
