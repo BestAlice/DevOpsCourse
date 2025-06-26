@@ -1,0 +1,55 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Этап 1: Сборка и тестирование приложения
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Установка Java (пример для Maven/Gradle)
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Сборка и запуск тестов
+      - name: Build and Test
+        run: |
+          ./mvnw clean test  # Для Maven
+          # Или ./gradlew test (если Gradle)
+          # Или npm test (если Node.js)
+
+  # Этап 2: Сборка и пуш Docker-образа (зависит от успеха тестов)
+  docker-build-and-push:
+    needs: build-and-test  # Ждём успешного завершения тестов
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Авторизация в Yandex Container Registry
+      - name: Login to YCR
+        run: |
+          echo "${{ secrets.YC_DOCKER_PASSWORD }}" | docker login \
+            --username iam \
+            --password-stdin \
+            cr.yandex
+
+      # Сборка Docker-образа
+      - name: Build Docker image
+        run: |
+          docker build -t cr.yandex/crp10cd1h16114aqlaaj/myapp:latest .
+          
+      # Пуш образа в YCR
+      - name: Push to YCR
+        run: |
+          docker push cr.yandex/crp10cd1h16114aqlaaj/myapp:latest
