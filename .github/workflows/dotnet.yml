@@ -16,6 +16,12 @@ jobs:
           YC_CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
           YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
     steps:
+      - uses: actions/checkout@v4  # Добавьте этот шаг первым!
+      - name: Verify Server directory exists
+        run: |
+          ls -la
+          ls -la Server || { echo "❌ Server directory not found!"; exit 1; }
+          
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
