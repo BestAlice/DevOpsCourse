@@ -10,10 +10,6 @@ jobs:
   save-in-cloud:
     name: Push_to_Docker
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: Server
     env:
           IMAGE_NAME: dino-server
           YC_TOKEN: ${{ secrets.YC_DOCKER_PASSWORD }}
@@ -55,6 +51,7 @@ jobs:
           yc config set token token.txt
 
       - name: Build Docker image
+        working-directory: Server
         run: |
           docker build -t cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest .
       - name: Push to YCR
