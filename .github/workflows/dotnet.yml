@@ -60,12 +60,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Login to YCR
+      - name: Auth in Yandex Cloud
+        env:
+          YC_TOKEN: ${{ secrets.YC_DOCKER_PASSWORD }}
+          YC_CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
+          YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
         run: |
-          echo "${{ secrets.YC_DOCKER_PASSWORD }}" | docker login \
-            --username iam \
-            --password-stdin \
-            cr.yandex
+          yc config set token $YC_TOKEN
+          yc config set cloud-id $YC_CLOUD_ID
+          yc config set folder-id $YC_FOLDER_ID
       - name: Build Docker image
         run: |
           docker build -t cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest ./Server
