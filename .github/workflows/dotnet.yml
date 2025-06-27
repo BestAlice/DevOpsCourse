@@ -34,10 +34,14 @@ jobs:
 
       - name: Configure YC CLI
         run: |
-          # Авторизация через токен (самый простой способ)
-          $YC_CLI_PATH/yc config set token ${{ secrets.YC_TOKEN }}
-          $YC_CLI_PATH/yc config set cloud-id ${{ secrets.YC_CLOUD_ID }}
-          $YC_CLI_PATH/yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
+          # Правильная авторизация через токен
+          yc config set token "${{ secrets.YC_TOKEN }}" --profile default
+          yc config set cloud-id "${{ secrets.YC_CLOUD_ID }}" --profile default
+          yc config set folder-id "${{ secrets.YC_FOLDER_ID }}" --profile default
+          
+          # Проверка
+          yc config list
+          
       - name: Docker Login
         run: |
           # Авторизация в реестре через IAM-токен
