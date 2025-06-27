@@ -2,67 +2,103 @@ name: .NET CI
 
 on:
   push:
-    branches: [ "main" ]
-    paths:
-      - 'Server/**'
+    branches: [ "main", "lab2" ]
   pull_request:
-    branches: [ "main" ]
-    paths:
-      - 'Server/**'
+    branches: [ "main", "lab2" ]
 
 jobs:
+  save-in-cloud:
+    name: Push_to_Docker
+    runs-on: ubuntu-latest
+    env:
+          IMAGE_NAME: dino-server
+          YC_TOKEN: ${{ secrets.YC_DOCKER_PASSWORD }}
+          YC_CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
+          YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+    steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0'  # Укажите вашу версию .NET
+      - name: Install YC CLI
+        run: |
+          # Установка в домашнюю директорию (без sudo)
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+          echo "$HOME/yandex-cloud/bin" >> $GITHUB_PATH
+          echo "YC_CLI_PATH=$HOME/yandex-cloud/bin" >> $GITHUB_ENV
+
+      - name: Verify YC CLI
+        run: |
+          $YC_CLI_PATH/yc --version
+          which yc
+
+      - name: Configure YC CLI
+        run: |
+          # Правильная авторизация через токен
+          yc config set token "${{ secrets.YC_TOKEN }}" --profile default
+          yc config set cloud-id "${{ secrets.YC_CLOUD_ID }}" --profile default
+          yc config set folder-id "${{ secrets.YC_FOLDER_ID }}" --profile default
+          
+          # Проверка
+          yc config list
+      - name: Login to Yandex Registry
+        run: |
+          # Создаем файл ключа
+          mkdir -p ~/.docker
+          echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY }}' > ~/.docker/key.json
+          yc config set service-account-key  ~/.docker/key.json
+          yc iam create-token > token.txt
+          yc config set token token.txt
+
+      - name: Build Docker image
+        run: |
+          cd $GITHUB_WORKSPACE/Server
+          docker build -t cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest .
+      - name: Push to YCR
+        run: |
+          docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest
   build:
     name: Build Solution
     runs-on: windows-latest
-
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.0.x'
-
-    - name: Cache NuGet packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-
-    - name: Restore dependencies
-      run: dotnet restore ./Server/BooksLab.sln
-
-    - name: Build Solution
-      run: dotnet build ./Server/BooksLab.sln --configuration Release --no-restore
-
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      - name: Restore dependencies
+        run: dotnet restore ./Server/BooksLab.sln
+      - name: Build Solution
+        run: dotnet build ./Server/BooksLab.sln --configuration Release --no-restore
+        id: build
     outputs:
       build_success: ${{ steps.build.outcome == 'success' }}
 
   test:
     name: Run Tests
     runs-on: windows-latest
-    needs: build  # Зависит от успешного выполнения job 'build'
-
+    needs: build
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.0.x'
-
-    - name: Cache NuGet packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-
-    - name: Restore dependencies (for tests)
-      run: dotnet restore ./Server/BooksLab.sln
-
-    - name: Run Tests
-      run: dotnet test ./Server/BooksLab.sln --configuration Release --no-build --verbosity normal
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      - name: Restore dependencies (for tests)
+        run: dotnet restore ./Server/BooksLab.sln
+      - name: Run Tests
+        run: dotnet test ./Server/DinoTest/DinoTest.csproj

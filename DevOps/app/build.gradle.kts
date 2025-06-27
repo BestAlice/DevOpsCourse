@@ -56,4 +56,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.4.0")
     androidTestImplementation("androidx.test:rules:1.4.0")
     androidTestImplementation("org.mockito:mockito-android:4.5.1")
+    testImplementation("org.robolectric:robolectric:4.10.3") // Последняя стабильная версия
 }

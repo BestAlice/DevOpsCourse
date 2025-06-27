@@ -9,8 +9,10 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
+//http://158.160.177.129
+//https://10.0.2.2:7151/
 object RetrofitClient {
-    private const val BASE_URL = "https://10.0.2.2:7151/"
+    private const val BASE_URL = "http://158.160.177.129:80/"
 
     private val unsafeOkHttpClient: OkHttpClient by lazy {
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
