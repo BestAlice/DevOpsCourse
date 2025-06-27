@@ -51,7 +51,7 @@ jobs:
       - name: Restore dependencies (for tests)
         run: dotnet restore ./Server/BooksLab.sln
       - name: Run Tests
-        run: dotnet test ./Server/DinoTest/DinoTest.csproj --configuration Release --no-build --verbosity normal
+        run: dotnet test ./Server/DinoTest/DinoTest.csproj
 
   save-in-cloud:
     needs: test
