@@ -2,39 +2,77 @@ name: .NET CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "lab2" ]
     paths:
-      - 'Server/**'  # Только при изменениях здесь
+      - 'Server/**'
   pull_request:
-    branches: [ "main"]
+    branches: [ "main", "lab2" ]
     paths:
       - 'Server/**'
 
-
 jobs:
-  NET-build-and-test:
-    runs-on: windows-latest   # ubuntu-latest или windows-latest, macos-latest
-
+  build:
+    name: Build Solution
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4  # Клонирует репозиторий
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      - name: Restore dependencies
+        run: dotnet restore ./Server/BooksLab.sln
+      - name: Build Solution
+        run: dotnet build ./Server/BooksLab.sln --configuration Release --no-restore
+        id: build
+    outputs:
+      build_success: ${{ steps.build.outcome == 'success' }}
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.0.x'  # Укажите вашу версию .NET (6.0, 7.0, 8.0)
-    - name: Cache NuGet packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-          
-    - name: Restore dependencies
-      run: dotnet restore ./Server/BooksLab.sln
+  test:
+    name: Run Tests
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      - name: Restore dependencies (for tests)
+        run: dotnet restore ./Server/BooksLab.sln
+      - name: Run Tests
+        run: dotnet test ./Server/BooksLab.sln --configuration Release --no-build --verbosity normal
 
-    - name: Build
-      run: dotnet build ./Server/BooksLab.sln --configuration Release --no-restore
-
-    - name: Test
-      run: dotnet test ./Server/BooksLab.sln --configuration Release --no-build --verbosity normal
+  save-in-cloud:
+    needs: test
+    name: Push_to_Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Login to YCR
+        run: |
+          echo "${{ secrets.YC_DOCKER_PASSWORD }}" | docker login \
+            --username iam \
+            --password-stdin \
+            cr.yandex
+      - name: Build Docker image
+        run: |
+          docker build -t cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest ./Server
+      - name: Push to YCR
+        run: |
+          docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest
