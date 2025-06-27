@@ -22,6 +22,7 @@ docker push cr.yandex/crp10cd1h16114aqlaaj/server-dino-server:latest
 docker tag mysql:8.0 cr.yandex/crp10cd1h16114aqlaaj/mysql:8.0
 docker push cr.yandex/crp10cd1h16114aqlaaj/mysql:8.0
 
+ssh -i ~/.ssh/id_ed25519 ubuntu@89.169.179.85
 
 
 
@@ -35,3 +36,11 @@ ssh -i ~/.ssh/id_ed25519 ubuntu@89.169.162.5
 Укажите сеть и подсеть (если их нет, создайте автоматически).
 Нажмите Создать кластер.
 
+
+curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+source "/home/ubuntu/.bashrc"
+yc init --token y0__xDhmPzWARjB3RMguoT0kBNDP55OJk8HaG6h7poiF2nJyNI6RA --cloud-id b1gcrgvduhipovboqgc0 --folder-id b1gdvic6l0c0tce4fov6
+
+yc managed-kubernetes cluster get-credentials k8s-lab3 --external
+
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml

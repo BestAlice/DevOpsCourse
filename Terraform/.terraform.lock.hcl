@@ -8,13 +8,6 @@ provider "registry.terraform.io/hashicorp/kubernetes" {
   ]
 }
 
-provider "registry.terraform.io/hashicorp/null" {
-  version = "3.2.4"
-  hashes = [
-    "h1:+Ag4hSb4qQjNtAS6gj2+gsGl7v0iB/Bif6zZZU8lXsw=",
-  ]
-}
-
 provider "registry.terraform.io/yandex-cloud/yandex" {
   version = "0.144.0"
   hashes = [

@@ -55,46 +55,18 @@ resource "yandex_compute_instance" "vm-2" {
   }
 
   provisioner "remote-exec" {
-    inline = [
-      # Установка Docker (оставляем как есть)
-      "sudo apt-get update",
-      "sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common",
-      "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
-      "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null",
-      "sudo apt-get update",
-      "sudo apt-get install -y docker-ce docker-ce-cli containerd.io",
-      "sudo systemctl enable docker",
-      "sudo systemctl start docker",
-      "sudo usermod -aG docker ubuntu",
-      
-      # Установка kubeadm, kubelet и kubectl
-      "sudo apt-get update",
-      "sudo apt-get install -y apt-transport-https curl",
-      "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -",
-      "echo \"deb https://apt.kubernetes.io/ kubernetes-xenial main\" | sudo tee /etc/apt/sources.list.d/kubernetes.list",
-      "sudo apt-get update",
-      "sudo apt-get install -y kubelet kubeadm kubectl",
-      "sudo apt-mark hold kubelet kubeadm kubectl",
-      
-      # Инициализация кластера kubeadm (мастер-узел)
-      "sudo kubeadm init --pod-network-cidr=10.244.0.0/16",
-      
-      # Настройка kubectl для обычного пользователя
-      "mkdir -p $HOME/.kube",
-      "sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config",
-      "sudo chown $(id -u):$(id -g) $HOME/.kube/config",
-      
-      # Установка сетевого плагина (Flannel)
-      "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml",
-      
-      # Снятие ограничений для однопользовательского кластера
-      "kubectl taint nodes --all node-role.kubernetes.io/control-plane-",
-      
-      # Проверка
-      "kubectl get nodes",
-      "kubectl get pods --all-namespaces"
-    ]
-  }
+  inline = [
+    # Install Docker (keep as is)
+    "sudo apt-get update",
+    "sudo apt-get install -y apt-transport-https ca-certificates curl",
+    "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
+    "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null",
+    "sudo apt-get update",
+    "sudo apt-get install -y docker-ce docker-ce-cli containerd.io",
+    "sudo usermod -aG docker ubuntu",
+   
+  ]
+}
 }
 
 resource "yandex_vpc_network" "network-1" {
@@ -240,35 +212,47 @@ resource "kubernetes_service" "dino-server" {
   }
 }
 
-resource "kubernetes_horizontal_pod_autoscaler" "dino-server-hpa" {
+resource "kubernetes_horizontal_pod_autoscaler_v2" "dino-server-hpa" {
   metadata {
     name = "dino-server-hpa"
   }
   spec {
     scale_target_ref {
       api_version = "apps/v1"
-      kind = "Deployment"
-      name = kubernetes_deployment.dino-server.metadata[0].name
+      kind        = "Deployment"
+      name        = kubernetes_deployment.dino-server.metadata[0].name
     }
     min_replicas = 1
     max_replicas = 10
-
-    target_cpu_utilization_percentage = 15
-
+    
+    # Changed from metrics to metric (singular)
+    metric {
+      type = "Resource"
+      resource {
+        name = "cpu"
+        target {
+          type                = "Utilization"
+          average_utilization = 15
+        }
+      }
+    }
+    
     behavior {
       scale_down {
         stabilization_window_seconds = 300
+        select_policy               = "Min"
         policy {
-          type = "Pods"
-          value = 1
+          type          = "Pods"
+          value         = 1
           period_seconds = 60
         }
       }
       scale_up {
         stabilization_window_seconds = 60
+        select_policy               = "Max"
         policy {
-          type = "Pods"
-          value = 2
+          type          = "Pods"
+          value         = 2
           period_seconds = 30
         }
       }
