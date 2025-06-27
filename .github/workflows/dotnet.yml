@@ -7,8 +7,54 @@ on:
     branches: [ "main", "lab2" ]
 
 jobs:
+  build:
+    name: Build Solution
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      - name: Restore dependencies
+        run: dotnet restore ./Server/BooksLab.sln
+      - name: Build Solution
+        run: dotnet build ./Server/BooksLab.sln --configuration Release --no-restore
+        id: build
+    outputs:
+      build_success: ${{ steps.build.outcome == 'success' }}
+
+  test:
+    name: Run Tests
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      - name: Restore dependencies (for tests)
+        run: dotnet restore ./Server/BooksLab.sln
+      - name: Run Tests
+        run: dotnet test ./Server/DinoTest/DinoTest.csproj
   save-in-cloud:
     name: Push_to_Docker
+    needs: test
     runs-on: ubuntu-latest
     env:
           IMAGE_NAME: dino-server
@@ -68,48 +114,3 @@ jobs:
       - name: Push to YCR
         run: |
           docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest
-  build:
-    name: Build Solution
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
-      - name: Cache NuGet packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-      - name: Restore dependencies
-        run: dotnet restore ./Server/BooksLab.sln
-      - name: Build Solution
-        run: dotnet build ./Server/BooksLab.sln --configuration Release --no-restore
-        id: build
-    outputs:
-      build_success: ${{ steps.build.outcome == 'success' }}
-
-  test:
-    name: Run Tests
-    runs-on: windows-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
-      - name: Cache NuGet packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-      - name: Restore dependencies (for tests)
-        run: dotnet restore ./Server/BooksLab.sln
-      - name: Run Tests
-        run: dotnet test ./Server/DinoTest/DinoTest.csproj
