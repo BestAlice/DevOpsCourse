@@ -20,10 +20,12 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.0'  # Укажите вашу версию .NET
-      - name: Install YC CLI
+      - name: Install YC CLI (alternative method)
         run: |
-          curl -sSL https://storage.yandex-cloud.net/yandexcloud-yc/install.sh | bash
-          echo "${{ secrets.YC_DOCKER_AUTH }}" | yc config set service-account-key -
+          # Установка из альтернативного источника
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+          echo "${{ secrets.YC_DOCKER_AUTH }}" > key.json
+          yc config set service-account-key key.json
           yc config set cloud-id ${{ secrets.YC_CLOUD_ID }}
           yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
 
