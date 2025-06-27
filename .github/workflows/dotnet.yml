@@ -43,8 +43,12 @@ jobs:
           yc config list
       - name: Login to Yandex Registry
         run: |
-          # Используем сервисный аккаунт для аутентификации
-          echo "${{ secrets.YC_DOCKER_AUTH }}" | docker login \
+          # Создаем файл ключа
+          mkdir -p ~/.docker
+          echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY }}' > ~/.docker/key.json
+          
+          # Авторизация через ключ сервисного аккаунта
+          cat ~/.docker/key.json | docker login \
             --username json_key \
             --password-stdin \
             cr.yandex.ru
