@@ -51,9 +51,9 @@ jobs:
           yc config set token token.txt
 
       - name: Build Docker image
-        working-directory: Server
         run: |
           docker build -t cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest .
+          working-directory: Server
       - name: Push to YCR
         run: |
           docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest
