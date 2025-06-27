@@ -66,7 +66,7 @@ jobs:
 
     - name: Run Tests
       run: dotnet test ./Server/BooksLab.sln --configuration Release --no-build --verbosity normal
-	  
+
   save-in-cloud:
     needs: test  # Ждём успешного завершения тестов
     name: Push_to_Docker
