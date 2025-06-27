@@ -46,8 +46,7 @@ jobs:
           # Создаем файл ключа
           mkdir -p ~/.docker
           echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY }}' > ~/.docker/key.json
-          
-          yc config set token $(yc iam create-token --iam-token=$(yc iam create-token --service-account-key ~/.docker/key.json))
+          yc config set token $(yc iam create-token --key-file ~/.docker/key.json)
 
       - name: Build Docker image
         run: |
