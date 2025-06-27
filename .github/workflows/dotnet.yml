@@ -41,11 +41,11 @@ jobs:
           
           # Проверка
           yc config list
-      - name: Configure Docker Auth
+      - name: Login to Yandex Registry
         run: |
-          # Прямая авторизация в Docker без yc
-          echo "${{ secrets.YC_DOCKER_PASSWORD }}" | docker login \
-            --username iam \
+          # Используем сервисный аккаунт для аутентификации
+          echo "${{ secrets.YC_DOCKER_AUTH }}" | docker login \
+            --username json_key \
             --password-stdin \
             cr.yandex.ru
 
