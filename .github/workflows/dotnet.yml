@@ -20,25 +20,36 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.0'  # Укажите вашу версию .NET
-      - name: Install YC CLI
+      - name: Install YC CLI (direct method)
         run: |
-          # Установка с явным обновлением PATH
-          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
-          echo 'export PATH=$HOME/yandex-cloud/bin:$PATH' >> $GITHUB_ENV
-          source $HOME/.bashrc
+          # Скачиваем бинарник напрямую
+          mkdir -p $HOME/yandex-cloud/bin
+          curl -L https://storage.yandexcloud.net/yandexcloud-yc/release/stable/linux/amd64/yc -o $HOME/yandex-cloud/bin/yc
+          chmod +x $HOME/yandex-cloud/bin/yc
+          echo "$HOME/yandex-cloud/bin" >> $GITHUB_PATH
+          echo "::add-path::$HOME/yandex-cloud/bin"
 
       - name: Configure YC CLI
         run: |
+          # Проверяем что yc доступен
+          which yc
+          yc --version
+          
+          # Настраиваем аутентификацию
           mkdir -p $HOME/.config/yandex-cloud
           echo "${{ secrets.YC_SERVICE_ACCOUNT_KEY }}" > $HOME/.config/yandex-cloud/key.json
-          yc config set service-account-key $HOME/.config/yandex-cloud/key.json
-          yc config set cloud-id ${{ secrets.YC_CLOUD_ID }}
-          yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
+          ./$HOME/yandex-cloud/bin/yc config set service-account-key $HOME/.config/yandex-cloud/key.json
+          ./$HOME/yandex-cloud/bin/yc config set cloud-id ${{ secrets.YC_CLOUD_ID }}
+          ./$HOME/yandex-cloud/bin/yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
 
-      - name: Login to Yandex Registry
+      - name: Docker Login
         run: |
-          yc container registry configure-docker
-          docker login --username iam --password $(yc iam create-token) cr.yandex.ru
+          # Используем полный путь к yc
+          $HOME/yandex-cloud/bin/yc container registry configure-docker
+          echo "${{ secrets.YC_DOCKER_PASSWORD }}" | docker login \
+            --username iam \
+            --password-stdin \
+            cr.yandex.ru
 
       - name: Build Docker image
         run: |
