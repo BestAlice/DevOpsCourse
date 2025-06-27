@@ -20,22 +20,24 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.0'  # Укажите вашу версию .NET
-      - name: Install and configure YC CLI
+      - name: Install YC CLI
         run: |
-          mkdir -p ~/bin
-          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i ~/bin
-          echo "$HOME/bin" >> $GITHUB_PATH
-          source "/home/runner/.bashrc"
+          # Установка в домашнюю директорию (без sudo)
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+          echo "$HOME/yandex-cloud/bin" >> $GITHUB_PATH
+          echo "YC_CLI_PATH=$HOME/yandex-cloud/bin" >> $GITHUB_ENV
 
-          # 2. Проверка что yc доступен
+      - name: Verify YC CLI
+        run: |
+          $YC_CLI_PATH/yc --version
           which yc
-          yc --version
 
-          # 3. Авторизация (используем временный токен)
-          yc config set token ${{ secrets.YC_TOKEN }}
-          yc config set cloud-id ${{ secrets.YC_CLOUD_ID }}
-          yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
-
+      - name: Configure YC CLI
+        run: |
+          # Авторизация через токен (самый простой способ)
+          $YC_CLI_PATH/yc config set token ${{ secrets.YC_TOKEN }}
+          $YC_CLI_PATH/yc config set cloud-id ${{ secrets.YC_CLOUD_ID }}
+          $YC_CLI_PATH/yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
       - name: Docker Login
         run: |
           # Авторизация в реестре через IAM-токен
