@@ -41,11 +41,10 @@ jobs:
           
           # Проверка
           yc config list
-          
-      - name: Docker Login
+      - name: Configure Docker Auth
         run: |
-          # Авторизация в реестре через IAM-токен
-          echo "$(yc iam create-token)" | docker login \
+          # Прямая авторизация в Docker без yc
+          echo "${{ secrets.YC_DOCKER_PASSWORD }}" | docker login \
             --username iam \
             --password-stdin \
             cr.yandex.ru
