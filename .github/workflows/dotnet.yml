@@ -52,7 +52,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest ./Server
+          docker build -t cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest $GITHUB_WORKSPACE/Server
       - name: Push to YCR
         run: |
           docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest
