@@ -7,6 +7,31 @@ on:
     branches: [ "main", "lab2" ]
 
 jobs:
+  save-in-cloud:
+    needs: test
+    name: Push_to_Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0'  # Укажите вашу версию .NET
+
+      - name: Login to Yandex Registry
+        env:
+          IMAGE_NAME: dino-server
+          YC_TOKEN: ${{ secrets.YC_DOCKER_PASSWORD }}
+          YC_CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
+          YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+        run: |
+          echo "${{ secrets.YC_DOCKER_AUTH }}" | docker login --username json_key --password-stdin cr.yandex.ru
+
+      - name: Build Docker image
+        run: |
+          docker build -t cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest ./Server
+      - name: Push to YCR
+        run: |
+          docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest
   build:
     name: Build Solution
     runs-on: windows-latest
@@ -52,26 +77,3 @@ jobs:
         run: dotnet restore ./Server/BooksLab.sln
       - name: Run Tests
         run: dotnet test ./Server/DinoTest/DinoTest.csproj
-
-  save-in-cloud:
-    needs: test
-    name: Push_to_Docker
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Auth in Yandex Cloud
-        env:
-          YC_TOKEN: ${{ secrets.YC_DOCKER_PASSWORD }}
-          YC_CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
-          YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
-        run: |
-          yc config set token $YC_TOKEN
-          yc config set cloud-id $YC_CLOUD_ID
-          yc config set folder-id $YC_FOLDER_ID
-      - name: Build Docker image
-        run: |
-          docker build -t cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest ./Server
-      - name: Push to YCR
-        run: |
-          docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest
