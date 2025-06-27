@@ -47,11 +47,7 @@ jobs:
           mkdir -p ~/.docker
           echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY }}' > ~/.docker/key.json
           
-          # Авторизация через ключ сервисного аккаунта
-          cat ~/.docker/key.json | docker login \
-            --username json_key \
-            --password-stdin \
-            cr.yandex.ru
+          yc config set token $(yc iam create-token --iam-token=$(yc iam create-token --service-account-key ~/.docker/key.json))
 
       - name: Build Docker image
         run: |
