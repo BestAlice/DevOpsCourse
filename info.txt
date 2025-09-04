@@ -44,3 +44,10 @@ yc init --token y0__xDhmPzWARjB3RMguoT0kBNDP55OJk8HaG6h7poiF2nJyNI6RA --cloud-id
 yc managed-kubernetes cluster get-credentials k8s-lab3 --external
 
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+
+ssh -i ~/.ssh/id_ed25519 ubuntu@89.169.179.85
+rsync -avz --progress username@server_ip:/путь/на/сервере/ /локальная/папка/
+
+rsync -avz - r "ssh -i ~/.ssh/id_ed25519" ubuntu@89.169.179.85:~/k8s/ S:/yc
+
