@@ -39,6 +39,7 @@ public static class TelegramService
     {
         if (update.Type == UpdateType.Message && update.Message != null)
         {
+            Console.WriteLine($"Получено сообщение: {update.Message.Text}");
             var chatId = update.Message.Chat.Id;
             _chatIds.TryAdd(chatId, true); // сохраняем всех, кто писал боту
 
