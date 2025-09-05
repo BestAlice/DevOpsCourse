@@ -153,7 +153,8 @@ jobs:
         run: |
           docker push cr.yandex/crpkvrrrkm0qabqoevs4/dino-server:latest
   deploy:
-    name: Deploy to YC VM #needs: save-in-cloud
+    name: Deploy to YC VM #
+    needs: save-in-cloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4 
