@@ -1,13 +1,12 @@
 pluginManagement {
     repositories {
-        google()             // обязательно для com.android.application
+        google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
-
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS) // PREFER_SETTINGS чтобы избежать FAIL_ON_PROJECT_REPOS
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()

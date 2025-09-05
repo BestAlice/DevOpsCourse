@@ -16,6 +16,7 @@ public class GetUsersService : IGetUsersService
     public async Task<IEnumerable<User>> GetUsersAsync()
     {
         await using var db = _contextFactory.CreateDbContext();
+        
         return await db.Users.ToListAsync();
     }
 }

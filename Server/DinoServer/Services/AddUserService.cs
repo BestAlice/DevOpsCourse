@@ -21,6 +21,7 @@ public class AddUserService : IAddUserService
         }
         await using var db = _contextFactory.CreateDbContext();
         await db.AddUserAsync(user);
+        await TelegramService.SendMessage("Score added " + userId  +" for " + user.Name);
         return user;
     }
 }

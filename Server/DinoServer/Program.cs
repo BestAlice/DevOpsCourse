@@ -2,14 +2,18 @@ using DinoServer.Interfaces;
 using DinoServer.Services;
 using DinoServer.Users;
 using Microsoft.EntityFrameworkCore;
-using Prometheus; // Добавьте этот using
+using Prometheus;
+using Telegram.Bot;
+using Telegram.Bot.Types; // Добавьте этот using
 
 namespace DinoServer;
 class Program
 {
-    public static void Main(string[] args)
+    
+    public static async Task Main(string[] args)
     {
         Console.WriteLine("Start");
+
         var builder = WebApplication.CreateBuilder(args);
         string con =
             $"server={Environment.GetEnvironmentVariable("DB_SERVER")};user={Environment.GetEnvironmentVariable("DB_USER")};password={Environment.GetEnvironmentVariable("DB_PASSWORD")};database={Environment.GetEnvironmentVariable("DB_NAME")};"; 
@@ -45,11 +49,15 @@ class Program
 
         app.MapControllers();
         
-        
+        // ----------------- Telegram Bot -----------------
+        var contextFactory = app.Services.GetRequiredService<IDbContextFactory<UserContext>>();
+        TelegramService.Initialize(contextFactory);
+        await TelegramService.SendMessage("Hi. Server is working");
         
         app.Run();
         Console.WriteLine("Server is working");
     }
+    
 }
 
     
