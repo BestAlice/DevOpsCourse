@@ -166,11 +166,13 @@ jobs:
 
       - name: Run docker-compose up on server
         run: |
-          echo "${{ secrets.SSH_KEY }}" > id_rsa
-          chmod 600 id_rsa
           ssh -o StrictHostKeyChecking=no -i id_rsa ubuntu@${{ secrets.SERVER_IP }} "
-            mkdir -p /home/ubuntu/server &&
-            cd /home/ubuntu/server &&
-            docker compose pull &&
-            docker compose up -d --remove-orphans
-          "
+          mkdir -p /home/ubuntu/server &&
+          cd /home/ubuntu/server &&
+          echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY }}' > key.json &&
+          yc config set service-account-key key.json &&
+          IAM_TOKEN=\$(yc iam create-token) &&
+          echo \$IAM_TOKEN | docker login --username iam --password-stdin cr.yandex &&
+          docker compose pull &&
+          docker compose up -d --remove-orphans
+        "
