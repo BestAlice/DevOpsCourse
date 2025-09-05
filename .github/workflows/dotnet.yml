@@ -165,12 +165,12 @@ jobs:
           scp -i id_rsa  -o StrictHostKeyChecking=no  Server/docker-compose.yml ubuntu@158.160.0.186:/home/ubuntu/server/
 
       - name: Run docker-compose up on server
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ubuntu
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /home/ubuntu/server
-            docker compose pull
+        run: |
+          echo "${{ secrets.SSH_KEY }}" > id_rsa
+          chmod 600 id_rsa
+          ssh -o StrictHostKeyChecking=no -i id_rsa ubuntu@${{ secrets.SERVER_IP }} "
+            mkdir -p /home/ubuntu/server &&
+            cd /home/ubuntu/server &&
+            docker compose pull &&
             docker compose up -d --remove-orphans
+          "
