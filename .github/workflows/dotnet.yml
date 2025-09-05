@@ -151,7 +151,6 @@ jobs:
           docker build -t cr.yandex/crpkvrrrkm0qabqoevs4/dino-server:latest .
       - name: Push to YCR
         run: |
-<<<<<<< HEAD
           docker push cr.yandex/crpkvrrrkm0qabqoevs4/dino-server:latest
   deploy:
     name: Deploy to YC VM
@@ -171,6 +170,3 @@ jobs:
             cd /home/ubuntu/server
             docker compose pull
             docker compose up -d --remove-orphans
-=======
-          docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest
->>>>>>> 4b908acdfe5464376205074908d8dd607cf54dc6
