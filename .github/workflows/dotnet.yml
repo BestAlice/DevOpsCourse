@@ -52,13 +52,18 @@ jobs:
         run: dotnet restore ./Server/BooksLab.sln
       - name: Run Tests with coverage
         run: dotnet test ./Server/DinoTest/DinoTest.csproj /p:CollectCoverage=true /p:CoverletOutput=./Server/DinoTest/coverage/coverage.cobertura.xml /p:CoverletOutputFormat=cobertura # /p:Threshold=80
+
   sonarqube:
     name: SonarQube Analysis
-    runs-on: windows-latest
+    runs-on: windows-latest 
     needs: test
     steps:
       - uses: actions/checkout@v4
-
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' 
+          java-version: 17
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -146,6 +151,7 @@ jobs:
           docker build -t cr.yandex/crpkvrrrkm0qabqoevs4/dino-server:latest .
       - name: Push to YCR
         run: |
+<<<<<<< HEAD
           docker push cr.yandex/crpkvrrrkm0qabqoevs4/dino-server:latest
   deploy:
     name: Deploy to YC VM
@@ -165,3 +171,6 @@ jobs:
             cd /home/ubuntu/server
             docker compose pull
             docker compose up -d --remove-orphans
+=======
+          docker push cr.yandex/crp10cd1h16114aqlaaj/dino-server:latest
+>>>>>>> 4b908acdfe5464376205074908d8dd607cf54dc6
