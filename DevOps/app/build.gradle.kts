@@ -1,27 +1,12 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("jacoco") // ← добавляем Jacoco
 }
-
-dependencies {
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0") // сам Retrofit
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0") // для работы с JSON через Gson
-    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0") // опционально, логирование запросов
-    implementation("com.google.android.material:material:1.10.0") // M3
-    implementation("androidx.appcompat:appcompat:1.7.0") // для совместимости DayNight
-    testImplementation("junit:junit:4.13.2") // для обычных unit-тестов
-    androidTestImplementation("androidx.test.ext:junit:1.1.5") // для Android-инструментированных тестов
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1") // для UI-тестов
-}
-
 
 android {
     namespace = "com.example.devops"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.devops"
@@ -42,12 +27,42 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+}
+
+dependencies {
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    finalizedBy("jacocoTestReport")
+}
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
     }
-    buildToolsVersion = "34.0.0"
+
+    val debugTree = fileTree("${buildDir}/tmp/kotlin-classes/debug")
+    classDirectories.setFrom(debugTree)
+    sourceDirectories.setFrom(files("src/main/java"))
+    executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
 }
