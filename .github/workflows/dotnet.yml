@@ -52,18 +52,13 @@ jobs:
         run: dotnet restore ./Server/BooksLab.sln
       - name: Run Tests with coverage
         run: dotnet test ./Server/DinoTest/DinoTest.csproj /p:CollectCoverage=true /p:CoverletOutput=./Server/DinoTest/coverage/coverage.cobertura.xml /p:CoverletOutputFormat=cobertura # /p:Threshold=80
-
   sonarqube:
     name: SonarQube Analysis
-    runs-on: windows-latest 
+    runs-on: windows-latest
     needs: test
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin' 
-          java-version: 17
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -100,7 +95,7 @@ jobs:
           YC_CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
           YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
     steps:
-      - uses: actions/checkout@v4  
+      - uses: actions/checkout@v4  # Добавьте этот шаг первым!
       - name: Verify Server directory exists
         run: |
           ls -la
@@ -109,7 +104,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '7.0'  
+          dotnet-version: '7.0'  # Укажите вашу версию .NET
       - name: Install YC CLI
         run: |
           # Установка в домашнюю директорию (без sudo)
@@ -152,30 +147,3 @@ jobs:
       - name: Push to YCR
         run: |
           docker push cr.yandex/crpkvrrrkm0qabqoevs4/dino-server:latest
-  deploy:
-    name: Deploy to YC VM #
-    needs: save-in-cloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4 
-      - name: Copy docker-compose.yml to server
-        run: |
-          echo "${{ secrets.SSH_KEY }}" > id_rsa
-          chmod 600 id_rsa
-          ls -la Server
-          scp -i id_rsa  -o StrictHostKeyChecking=no  Server/docker-compose.yml ubuntu@158.160.0.186:/home/ubuntu/server/
-
-      - name: Run docker-compose up on server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i id_rsa ubuntu@${{ secrets.SERVER_IP }} << 'ENDSSH'
-          mkdir -p /home/ubuntu/server
-          cd /home/ubuntu/server
-          cat > key.json << 'ENDKEY'
-          ${{ secrets.YC_SERVICE_ACCOUNT_KEY }}
-          ENDKEY
-          yc config set service-account-key key.json
-          IAM_TOKEN=$(yc iam create-token)
-          echo $IAM_TOKEN | docker login --username iam --password-stdin cr.yandex
-          docker compose pull
-          docker compose up -d --remove-orphans
-          ENDSSH
