@@ -175,4 +175,4 @@ jobs:
           echo \$IAM_TOKEN | docker login --username iam --password-stdin cr.yandex &&
           docker compose pull &&
           docker compose up -d --remove-orphans
-        "
+          "
