@@ -157,10 +157,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Copy docker-compose.yml to server
+        working-directory: Server
         run: |
           echo "${{ secrets.SSH_KEY }}" > id_rsa
           chmod 600 id_rsa
-          scp -i id_rsa -o StrictHostKeyChecking=no ./Server/docker-compose.yml ubuntu@158.160.0.186:/home/ubuntu/server/
+          scp -i id_rsa -o StrictHostKeyChecking=no docker-compose.yml ubuntu@158.160.0.186:/home/ubuntu/server/
 
       - name: Run docker-compose up on server
         uses: appleboy/ssh-action@v0.1.10
