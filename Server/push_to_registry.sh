@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Конфигурация
-REGISTRY_ID="crp10cd1h16114aqlaaj"  # Замените на ваш ID реестра
+REGISTRY_ID="crpkvrrrkm0qabqoevs4"  # Замените на ваш ID реестра
 TAG="latest"                # Тег для образов
 
 # Функция для тегирования и отправки образа

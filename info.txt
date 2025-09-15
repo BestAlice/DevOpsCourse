@@ -23,8 +23,15 @@ docker tag mysql:8.0 cr.yandex/crp10cd1h16114aqlaaj/mysql:8.0
 docker push cr.yandex/crp10cd1h16114aqlaaj/mysql:8.0
 
 ssh -i ~/.ssh/id_ed25519 ubuntu@89.169.179.85
+ssh -l ubuntu@89.169.179.85 158.160.0.186
 
+cr.yandex/crpkvrrrkm0qabqoevs4
 
+docker tag brokensun/dino-server  cr.yandex/crpkvrrrkm0qabqoevs4/dino-server
+docker push cr.yandex/crpkvrrrkm0qabqoevs4/dino-server
+
+docker tag brokensun/android-builder  cr.yandex/crpkvrrrkm0qabqoevs4/android-builder
+docker push cr.yandex/crpkvrrrkm0qabqoevs4/android-builder
 
 
 terraform apply
@@ -51,3 +58,16 @@ rsync -avz --progress username@server_ip:/путь/на/сервере/ /лок�
 
 rsync -avz - r "ssh -i ~/.ssh/id_ed25519" ubuntu@89.169.179.85:~/k8s/ S:/yc
 
+ssh -i C:/Users/User/.ssh/id_ed25519_new -o StrictHostKeyChecking=no ubuntu@158.160.0.186
+ssh -i C:/Users/User/.ssh/id_ed25519 ubuntu@158.160.0.186
+
+
+dotnet test DinoTest/DinoTest.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura  /p:CoverletOutput=coverage/
+
+dotnet test DinoTest/DinoTest.csproj --collect:"XPlat Code Coverage" --results-directory DinoTest/coverage
+
+dotnet test ./Server/DinoTest/DinoTest.csproj --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./Server/DinoTest/coverage/coverage.cobertura.xml --results-directory ./Server/DinoTest/coverage
+
+dotnet test ./Server/DinoTest/DinoTest.csproj  /p:CollectCoverage=true /p:CoverletOutput=./Server/DinoTest/coverage/coverage.cobertura.xml  /p:CoverletOutputFormat=cobertura --results-directory ./Server/DinoTest/coverage
+
+dotnet test ./Server/DinoTest/DinoTest.csproj /p:CollectCoverage=true /p:CoverletOutput=./Server/DinoTest/coverage/coverage.cobertura.xml /p:CoverletOutputFormat=cobertura

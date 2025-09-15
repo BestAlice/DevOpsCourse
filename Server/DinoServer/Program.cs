@@ -2,19 +2,24 @@ using DinoServer.Interfaces;
 using DinoServer.Services;
 using DinoServer.Users;
 using Microsoft.EntityFrameworkCore;
-using Prometheus; // Добавьте этот using
+using Prometheus;
+using System.Diagnostics.CodeAnalysis;
+using Telegram.Bot;
+using Telegram.Bot.Types;
 
 namespace DinoServer;
 class Program
 {
-    public static void Main(string[] args)
+    
+    public static async Task Main(string[] args)
     {
         Console.WriteLine("Start");
+
         var builder = WebApplication.CreateBuilder(args);
         string con =
-            $"server={Environment.GetEnvironmentVariable("DB_SERVER")};user={Environment.GetEnvironmentVariable("DB_USER")};password={Environment.GetEnvironmentVariable("DB_PASSWORD")};database={Environment.GetEnvironmentVariable("DB_NAME")};"; 
+        //    $"server={Environment.GetEnvironmentVariable("DB_SERVER")};user={Environment.GetEnvironmentVariable("DB_USER")};password={Environment.GetEnvironmentVariable("DB_PASSWORD")};database={Environment.GetEnvironmentVariable("DB_NAME")};"; 
         //dino-db-service.default.svc.cluster.local    
-        //"server=localhost;user=root;password=password;database=DinoDB;";
+            "server=localhost;user=root;password=password;database=DinoDB;";
         var version = new MySqlServerVersion(new Version(8, 0, 11));
         builder.Services.AddDbContextFactory<UserContext>(options => options.UseMySql(con, version));
         
@@ -45,11 +50,15 @@ class Program
 
         app.MapControllers();
         
-        
+        // ----------------- Telegram Bot -----------------
+        var contextFactory = app.Services.GetRequiredService<IDbContextFactory<UserContext>>();
+        TelegramService.Initialize(contextFactory);
+        await TelegramService.SendMessage("Hi. Server is working");
         
         app.Run();
         Console.WriteLine("Server is working");
     }
+    
 }
 
     

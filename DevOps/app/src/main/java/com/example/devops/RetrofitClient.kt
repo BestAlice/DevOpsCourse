@@ -12,7 +12,7 @@ import javax.net.ssl.X509TrustManager
 //http://158.160.177.129
 //https://10.0.2.2:7151/
 object RetrofitClient {
-    private const val BASE_URL = "http://158.160.186.51:80/"
+    private const val BASE_URL = "http://89.169.191.232:7151/"
 
     private val unsafeOkHttpClient: OkHttpClient by lazy {
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
