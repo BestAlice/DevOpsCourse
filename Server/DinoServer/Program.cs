@@ -10,6 +10,7 @@ using Telegram.Bot.Types;
 namespace DinoServer;
 class Program
 {
+    [ExcludeFromCodeCoverage]
     public static async Task Main(string[] args)
     {
         Console.WriteLine("Start");
