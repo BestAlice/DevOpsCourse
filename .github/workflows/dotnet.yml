@@ -54,8 +54,7 @@ jobs:
         run: dotnet test ./Server/DinoTest/DinoTest.csproj /p:CollectCoverage=true /p:CoverletOutput=./Server/DinoTest/coverage/coverage.cobertura.xml /p:CoverletOutputFormat=cobertura # /p:Threshold=80
   sonarqube:
     name: SonarQube Analysis
-    runs-on: windows-latest
-    needs: test
+    runs-on: windows-latest #needs: test
     steps:
       - uses: actions/checkout@v4
 
