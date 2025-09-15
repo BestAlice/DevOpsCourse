@@ -3,10 +3,12 @@ using DinoServer.Services;
 using DinoServer.Users;
 using Microsoft.EntityFrameworkCore;
 using Prometheus;
+using System.Diagnostics.CodeAnalysis;
 using Telegram.Bot;
-using Telegram.Bot.Types; // Добавьте этот using
+using Telegram.Bot.Types;
 
 namespace DinoServer;
+[ExcludeFromCodeCoverage]
 class Program
 {
     
@@ -16,9 +18,9 @@ class Program
 
         var builder = WebApplication.CreateBuilder(args);
         string con =
-            $"server={Environment.GetEnvironmentVariable("DB_SERVER")};user={Environment.GetEnvironmentVariable("DB_USER")};password={Environment.GetEnvironmentVariable("DB_PASSWORD")};database={Environment.GetEnvironmentVariable("DB_NAME")};"; 
+        //    $"server={Environment.GetEnvironmentVariable("DB_SERVER")};user={Environment.GetEnvironmentVariable("DB_USER")};password={Environment.GetEnvironmentVariable("DB_PASSWORD")};database={Environment.GetEnvironmentVariable("DB_NAME")};"; 
         //dino-db-service.default.svc.cluster.local    
-        //"server=localhost;user=root;password=password;database=DinoDB;";
+            "server=localhost;user=root;password=password;database=DinoDB;";
         var version = new MySqlServerVersion(new Version(8, 0, 11));
         builder.Services.AddDbContextFactory<UserContext>(options => options.UseMySql(con, version));
         
