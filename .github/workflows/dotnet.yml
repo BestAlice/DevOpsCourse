@@ -165,6 +165,7 @@ jobs:
         # run: echo "${{ secrets.YC_IAM_TOKEN }}" | docker login cr.yandex -u iam --password-stdin
 
       - name: Build and push
+        working-directory: Server
         env:
           REGISTRY_ID: crpkvrrrkm0qabqoevs4
           IMAGE_NAME: dino-server
