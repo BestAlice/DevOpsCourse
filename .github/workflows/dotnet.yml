@@ -51,10 +51,11 @@ jobs:
       - name: Restore dependencies (for tests)
         run: dotnet restore ./Server/BooksLab.sln
       - name: Run Tests with coverage
-        run: dotnet test ./Server/DinoTest/DinoTest.csproj /p:CollectCoverage=true /p:CoverletOutput=./coverage/coverage.cobertura.xml /p:CoverletOutputFormat=cobertura # /p:Threshold=80
+        run: dotnet test ./Server/DinoTest/DinoTest.csproj -c Release /p:CollectCoverage=true /p:CoverletOutput=./coverage/coverage.opencover.xml /p:CoverletOutputFormat=opencover # /p:Threshold=80
   sonarqube:
     name: SonarQube Analysis
-    runs-on: windows-latest #needs: test
+    runs-on: windows-latest #
+    needs: test
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -78,7 +79,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"lab4" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.cs.opencover.reportsPaths="./Server/DinoTest/coverage/coverage.cobertura.xml"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"lab4" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.cs.opencover.reportsPaths="./Server/DinoTest/coverage/coverage.opencover.xml"
 
       - name: Build Solution for SonarQube
         run: dotnet build ./Server/BooksLab.sln --configuration Release
