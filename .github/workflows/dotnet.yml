@@ -78,7 +78,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"lab4" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.coverage.exclusions="**/wwwroot/**,DevOps/app/src/main/assets/**,**/*.js
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"lab4" /d:sonar.login="***" /d:sonar.host.url="***" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.coverage.exclusions="**/wwwroot/**,DevOps/app/src/main/assets/**,**/*.js"
       - name: Build Solution for SonarQube
         run: dotnet build ./Server/BooksLab.sln --configuration Release
       - name: Test for SonarQube (generate OpenCover)
