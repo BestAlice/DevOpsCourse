@@ -3,12 +3,8 @@ name: Android CI
 on:
   push:
     branches: [ "main", "master" ]
-    paths: 
-      - 'DevOps/**'  
   pull_request:
     branches: [ "main", "master" ]
-    paths: 
-      - 'DevOps/**'
 
 jobs:
   build:
@@ -76,4 +72,23 @@ jobs:
     
     - name: Run tests
       working-directory: ./DevOps
-      run: ./gradlew test
+      run: ./gradlew test jacocoTestReport
+      
+  sonar:
+      name: Tests & SonarQube
+      runs-on: windows-latest
+      needs: build
+      defaults:
+        run:
+          working-directory: DevOps
+      steps:
+        - uses: actions/checkout@v4
+      
+        - name: Unit tests & coverage (Jacoco)
+          run: ./gradlew.bat testDebugUnitTest jacocoTestReport
+        - name: SonarQube analysis (Gradle)
+          env:
+            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+            SONAR_TOKEN:     ${{ secrets.SONAR_TOKEN }}
+          run: ./gradlew.bat sonarqube -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.login=%SONAR_TOKEN%
+    
