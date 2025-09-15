@@ -8,7 +8,6 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace DinoServer;
-[ExcludeFromCodeCoverage]
 class Program
 {
     
