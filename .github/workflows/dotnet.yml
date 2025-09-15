@@ -15,7 +15,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '8.0.x'
       - name: Cache NuGet packages
         uses: actions/cache@v3
         with:
@@ -40,7 +40,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '8.0.x'
       - name: Cache NuGet packages
         uses: actions/cache@v3
         with:
@@ -51,7 +51,7 @@ jobs:
       - name: Restore dependencies (for tests)
         run: dotnet restore ./Server/BooksLab.sln
       - name: Run Tests with coverage
-        run: dotnet test ./Server/DinoTest/DinoTest.csproj -c Release /p:CollectCoverage=true /p:CoverletOutput=./coverage/coverage.opencover.xml /p:CoverletOutputFormat=opencover # /p:Threshold=80
+        run: dotnet test ./Server/DinoTest/DinoTest.csproj -c Release /p:CollectCoverage=true /p:CoverletOutput=Server/DinoTest/coverage/coverage.opencover.xml /p:CoverletOutputFormat=opencover # /p:Threshold=80
   sonarqube:
     name: SonarQube Analysis
     runs-on: windows-latest #
@@ -79,11 +79,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"lab4" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.cs.opencover.reportsPaths="./Server/DinoTest/coverage/coverage.opencover.xml"
-
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"lab4" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
       - name: Build Solution for SonarQube
         run: dotnet build ./Server/BooksLab.sln --configuration Release
-
+      - name: Test for SonarQube (generate OpenCover)
+        run: dotnet test ./Server/DinoTest/DinoTest.csproj -c Release /p:CollectCoverage=true /p:CoverletOutput=Server/DinoTest/coverage/coverage.opencover.xml /p:CoverletOutputFormat=opencover
       - name: End SonarQube Analysis
         shell: powershell
         env:
