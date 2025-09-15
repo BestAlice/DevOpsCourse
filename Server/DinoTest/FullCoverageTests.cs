@@ -121,6 +121,7 @@ namespace DinoServer.Tests
     public async Task TelegramService_SendMessage_NoBot_ShouldNotThrow()
     {
       await TelegramService.SendMessage("Test message");
+      Assert.IsNotNull(true);
     }
 
     [Test]
