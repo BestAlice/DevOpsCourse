@@ -1,73 +1,383 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.37829999999999997" branch-rate="0.5" version="1.9" timestamp="1757032764" lines-covered="42" lines-valid="111" branches-covered="4" branches-valid="8">
+<coverage line-rate="0.22219999999999998" branch-rate="0.125" version="1.9" timestamp="1757887399" lines-covered="42" lines-valid="189" branches-covered="4" branches-valid="32">
   <sources>
     <source>S:\User_section\Study\1cousre_maga\DevOps\Server\DinoServer\</source>
   </sources>
   <packages>
-    <package name="DinoServer" line-rate="0.37829999999999997" branch-rate="0.5" complexity="29">
+    <package name="DinoServer" line-rate="0.22219999999999998" branch-rate="0.125" complexity="57">
       <classes>
-        <class name="DinoServer.Program" filename="Program.cs" line-rate="0" branch-rate="1" complexity="1">
+        <class name="DinoServer.Program/&lt;&gt;c" filename="Program.cs" line-rate="0" branch-rate="1" complexity="1">
           <methods>
-            <method name="Main" signature="(System.String[])" line-rate="0" branch-rate="1" complexity="1">
+            <method name="&lt;Main&gt;b__0_1" signature="(Prometheus.KestrelMetricServerOptions)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="0" branch="False" />
-                <line number="12" hits="0" branch="False" />
-                <line number="13" hits="0" branch="False" />
-                <line number="14" hits="0" branch="False" />
-                <line number="15" hits="0" branch="False" />
-                <line number="18" hits="0" branch="False" />
-                <line number="19" hits="0" branch="False" />
-                <line number="21" hits="0" branch="False" />
-                <line number="22" hits="0" branch="False" />
-                <line number="23" hits="0" branch="False" />
-                <line number="24" hits="0" branch="False" />
-                <line number="25" hits="0" branch="False" />
-                <line number="26" hits="0" branch="False" />
                 <line number="28" hits="0" branch="False" />
-                <line number="33" hits="0" branch="False" />
-                <line number="34" hits="0" branch="False" />
-                <line number="36" hits="0" branch="False" />
-                <line number="37" hits="0" branch="False" />
-                <line number="39" hits="0" branch="False" />
-                <line number="40" hits="0" branch="False" />
-                <line number="41" hits="0" branch="False" />
-                <line number="42" hits="0" branch="False" />
-                <line number="43" hits="0" branch="False" />
-                <line number="46" hits="0" branch="False" />
-                <line number="50" hits="0" branch="False" />
-                <line number="51" hits="0" branch="False" />
-                <line number="52" hits="0" branch="False" />
+                <line number="29" hits="0" branch="False" />
+                <line number="30" hits="0" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="11" hits="0" branch="False" />
-            <line number="12" hits="0" branch="False" />
-            <line number="13" hits="0" branch="False" />
+            <line number="28" hits="0" branch="False" />
+            <line number="29" hits="0" branch="False" />
+            <line number="30" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="DinoServer.Program/&lt;&gt;c__DisplayClass0_0" filename="Program.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="&lt;Main&gt;b__0" signature="(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="23" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="23" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="DinoServer.Program/&lt;Main&gt;d__0" filename="Program.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="0" branch="False" />
+                <line number="15" hits="0" branch="False" />
+                <line number="17" hits="0" branch="False" />
+                <line number="18" hits="0" branch="False" />
+                <line number="19" hits="0" branch="False" />
+                <line number="22" hits="0" branch="False" />
+                <line number="25" hits="0" branch="False" />
+                <line number="26" hits="0" branch="False" />
+                <line number="27" hits="0" branch="False" />
+                <line number="32" hits="0" branch="False" />
+                <line number="37" hits="0" branch="False" />
+                <line number="38" hits="0" branch="False" />
+                <line number="40" hits="0" branch="False" />
+                <line number="41" hits="0" branch="False" />
+                <line number="43" hits="0" branch="False" />
+                <line number="44" hits="0" branch="False" />
+                <line number="45" hits="0" branch="False" />
+                <line number="46" hits="0" branch="False" />
+                <line number="47" hits="0" branch="False" />
+                <line number="50" hits="0" branch="False" />
+                <line number="53" hits="0" branch="False" />
+                <line number="54" hits="0" branch="False" />
+                <line number="55" hits="0" branch="False" />
+                <line number="57" hits="0" branch="False" />
+                <line number="58" hits="0" branch="False" />
+                <line number="59" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
             <line number="14" hits="0" branch="False" />
             <line number="15" hits="0" branch="False" />
+            <line number="17" hits="0" branch="False" />
             <line number="18" hits="0" branch="False" />
             <line number="19" hits="0" branch="False" />
-            <line number="21" hits="0" branch="False" />
             <line number="22" hits="0" branch="False" />
-            <line number="23" hits="0" branch="False" />
-            <line number="24" hits="0" branch="False" />
             <line number="25" hits="0" branch="False" />
             <line number="26" hits="0" branch="False" />
+            <line number="27" hits="0" branch="False" />
+            <line number="32" hits="0" branch="False" />
+            <line number="37" hits="0" branch="False" />
+            <line number="38" hits="0" branch="False" />
+            <line number="40" hits="0" branch="False" />
+            <line number="41" hits="0" branch="False" />
+            <line number="43" hits="0" branch="False" />
+            <line number="44" hits="0" branch="False" />
+            <line number="45" hits="0" branch="False" />
+            <line number="46" hits="0" branch="False" />
+            <line number="47" hits="0" branch="False" />
+            <line number="50" hits="0" branch="False" />
+            <line number="53" hits="0" branch="False" />
+            <line number="54" hits="0" branch="False" />
+            <line number="55" hits="0" branch="False" />
+            <line number="57" hits="0" branch="False" />
+            <line number="58" hits="0" branch="False" />
+            <line number="59" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="DinoServer.TelegramService" filename="TelegramService.cs" line-rate="0" branch-rate="0" complexity="10">
+          <methods>
+            <method name="Initialize" signature="(Microsoft.EntityFrameworkCore.IDbContextFactory`1&lt;DinoServer.Users.UserContext&gt;)" line-rate="0" branch-rate="0" complexity="6">
+              <lines>
+                <line number="22" hits="0" branch="False" />
+                <line number="23" hits="0" branch="False" />
+                <line number="25" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="17" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="27" hits="0" branch="False" />
+                <line number="28" hits="0" branch="False" />
+                <line number="30" hits="0" branch="True" condition-coverage="0% (0/4)">
+                  <conditions>
+                    <condition number="67" type="jump" coverage="0%" />
+                    <condition number="94" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="31" hits="0" branch="False" />
+                <line number="32" hits="0" branch="False" />
+                <line number="33" hits="0" branch="False" />
+                <line number="34" hits="0" branch="False" />
+                <line number="35" hits="0" branch="False" />
+                <line number="36" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="HandleErrorAsync" signature="(Telegram.Bot.ITelegramBotClient,System.Exception,System.Threading.CancellationToken)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="65" hits="0" branch="False" />
+                <line number="66" hits="0" branch="False" />
+                <line number="67" hits="0" branch="False" />
+                <line number="68" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="Stop" signature="()" line-rate="0" branch-rate="0" complexity="2">
+              <lines>
+                <line number="94" hits="0" branch="False" />
+                <line number="95" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="7" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="96" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="0" branch="False" />
+                <line number="16" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="22" hits="0" branch="False" />
+            <line number="23" hits="0" branch="False" />
+            <line number="25" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="17" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="27" hits="0" branch="False" />
             <line number="28" hits="0" branch="False" />
+            <line number="30" hits="0" branch="True" condition-coverage="0% (0/4)">
+              <conditions>
+                <condition number="67" type="jump" coverage="0%" />
+                <condition number="94" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="31" hits="0" branch="False" />
+            <line number="32" hits="0" branch="False" />
             <line number="33" hits="0" branch="False" />
             <line number="34" hits="0" branch="False" />
+            <line number="35" hits="0" branch="False" />
             <line number="36" hits="0" branch="False" />
-            <line number="37" hits="0" branch="False" />
+            <line number="65" hits="0" branch="False" />
+            <line number="66" hits="0" branch="False" />
+            <line number="67" hits="0" branch="False" />
+            <line number="68" hits="0" branch="False" />
+            <line number="94" hits="0" branch="False" />
+            <line number="95" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="7" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="96" hits="0" branch="False" />
+            <line number="14" hits="0" branch="False" />
+            <line number="16" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="DinoServer.TelegramService/&lt;BuildLeaderboardAsync&gt;d__10" filename="TelegramService.cs" line-rate="0" branch-rate="0" complexity="4">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0" branch-rate="0" complexity="4">
+              <lines>
+                <line number="99" hits="0" branch="False" />
+                <line number="102" hits="0" branch="False" />
+                <line number="103" hits="0" branch="False" />
+                <line number="104" hits="0" branch="False" />
+                <line number="105" hits="0" branch="False" />
+                <line number="106" hits="0" branch="False" />
+                <line number="108" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="295" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="111" hits="0" branch="False" />
+                <line number="112" hits="0" branch="False" />
+                <line number="113" hits="0" branch="False" />
+                <line number="114" hits="0" branch="False" />
+                <line number="115" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="512" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="116" hits="0" branch="False" />
+                <line number="117" hits="0" branch="False" />
+                <line number="118" hits="0" branch="False" />
+                <line number="120" hits="0" branch="False" />
+                <line number="121" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="99" hits="0" branch="False" />
+            <line number="102" hits="0" branch="False" />
+            <line number="103" hits="0" branch="False" />
+            <line number="104" hits="0" branch="False" />
+            <line number="105" hits="0" branch="False" />
+            <line number="106" hits="0" branch="False" />
+            <line number="108" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="295" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="111" hits="0" branch="False" />
+            <line number="112" hits="0" branch="False" />
+            <line number="113" hits="0" branch="False" />
+            <line number="114" hits="0" branch="False" />
+            <line number="115" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="512" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="116" hits="0" branch="False" />
+            <line number="117" hits="0" branch="False" />
+            <line number="118" hits="0" branch="False" />
+            <line number="120" hits="0" branch="False" />
+            <line number="121" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="DinoServer.TelegramService/&lt;HandleUpdateAsync&gt;d__6" filename="TelegramService.cs" line-rate="0" branch-rate="0" complexity="8">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0" branch-rate="0" complexity="8">
+              <lines>
+                <line number="39" hits="0" branch="False" />
+                <line number="40" hits="0" branch="True" condition-coverage="0% (0/4)">
+                  <conditions>
+                    <condition number="42" type="jump" coverage="0%" />
+                    <condition number="63" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="41" hits="0" branch="False" />
+                <line number="42" hits="0" branch="False" />
+                <line number="43" hits="0" branch="False" />
+                <line number="44" hits="0" branch="False" />
+                <line number="46" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="164" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="48" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="198" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="49" hits="0" branch="False" />
+                <line number="51" hits="0" branch="False" />
+                <line number="53" hits="0" branch="False" />
+                <line number="54" hits="0" branch="False" />
+                <line number="55" hits="0" branch="False" />
+                <line number="56" hits="0" branch="False" />
+                <line number="57" hits="0" branch="False" />
+                <line number="58" hits="0" branch="False" />
+                <line number="59" hits="0" branch="False" />
+                <line number="60" hits="0" branch="False" />
+                <line number="61" hits="0" branch="False" />
+                <line number="62" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
             <line number="39" hits="0" branch="False" />
-            <line number="40" hits="0" branch="False" />
+            <line number="40" hits="0" branch="True" condition-coverage="0% (0/4)">
+              <conditions>
+                <condition number="42" type="jump" coverage="0%" />
+                <condition number="63" type="jump" coverage="0%" />
+              </conditions>
+            </line>
             <line number="41" hits="0" branch="False" />
             <line number="42" hits="0" branch="False" />
             <line number="43" hits="0" branch="False" />
-            <line number="46" hits="0" branch="False" />
-            <line number="50" hits="0" branch="False" />
+            <line number="44" hits="0" branch="False" />
+            <line number="46" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="164" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="48" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="198" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="49" hits="0" branch="False" />
             <line number="51" hits="0" branch="False" />
-            <line number="52" hits="0" branch="False" />
+            <line number="53" hits="0" branch="False" />
+            <line number="54" hits="0" branch="False" />
+            <line number="55" hits="0" branch="False" />
+            <line number="56" hits="0" branch="False" />
+            <line number="57" hits="0" branch="False" />
+            <line number="58" hits="0" branch="False" />
+            <line number="59" hits="0" branch="False" />
+            <line number="60" hits="0" branch="False" />
+            <line number="61" hits="0" branch="False" />
+            <line number="62" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="DinoServer.TelegramService/&lt;SendMessage&gt;d__8" filename="TelegramService.cs" line-rate="0" branch-rate="0" complexity="4">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0" branch-rate="0" complexity="4">
+              <lines>
+                <line number="72" hits="0" branch="False" />
+                <line number="73" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="25" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="74" hits="0" branch="False" />
+                <line number="75" hits="0" branch="False" />
+                <line number="76" hits="0" branch="False" />
+                <line number="79" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="364" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="80" hits="0" branch="False" />
+                <line number="82" hits="0" branch="False" />
+                <line number="83" hits="0" branch="False" />
+                <line number="84" hits="0" branch="False" />
+                <line number="85" hits="0" branch="False" />
+                <line number="86" hits="0" branch="False" />
+                <line number="87" hits="0" branch="False" />
+                <line number="88" hits="0" branch="False" />
+                <line number="89" hits="0" branch="False" />
+                <line number="90" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="72" hits="0" branch="False" />
+            <line number="73" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="25" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="74" hits="0" branch="False" />
+            <line number="75" hits="0" branch="False" />
+            <line number="76" hits="0" branch="False" />
+            <line number="79" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="364" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="80" hits="0" branch="False" />
+            <line number="82" hits="0" branch="False" />
+            <line number="83" hits="0" branch="False" />
+            <line number="84" hits="0" branch="False" />
+            <line number="85" hits="0" branch="False" />
+            <line number="86" hits="0" branch="False" />
+            <line number="87" hits="0" branch="False" />
+            <line number="88" hits="0" branch="False" />
+            <line number="89" hits="0" branch="False" />
+            <line number="90" hits="0" branch="False" />
           </lines>
         </class>
         <class name="DinoServer.Users.User" filename="Users\User.cs" line-rate="0.9582999999999999" branch-rate="0.6666" complexity="13">
@@ -281,7 +591,7 @@
                 <line number="17" hits="0" branch="False" />
                 <line number="18" hits="0" branch="True" condition-coverage="0% (0/2)">
                   <conditions>
-                    <condition number="37" type="jump" coverage="0%" />
+                    <condition number="38" type="jump" coverage="0%" />
                   </conditions>
                 </line>
                 <line number="19" hits="0" branch="False" />
@@ -290,6 +600,7 @@
                 <line number="23" hits="0" branch="False" />
                 <line number="24" hits="0" branch="False" />
                 <line number="25" hits="0" branch="False" />
+                <line number="26" hits="0" branch="False" />
               </lines>
             </method>
           </methods>
@@ -297,7 +608,7 @@
             <line number="17" hits="0" branch="False" />
             <line number="18" hits="0" branch="True" condition-coverage="0% (0/2)">
               <conditions>
-                <condition number="37" type="jump" coverage="0%" />
+                <condition number="38" type="jump" coverage="0%" />
               </conditions>
             </line>
             <line number="19" hits="0" branch="False" />
@@ -306,6 +617,7 @@
             <line number="23" hits="0" branch="False" />
             <line number="24" hits="0" branch="False" />
             <line number="25" hits="0" branch="False" />
+            <line number="26" hits="0" branch="False" />
           </lines>
         </class>
         <class name="DinoServer.Services.GetUsersService" filename="Services\GetUsersService.cs" line-rate="0" branch-rate="1" complexity="1">
@@ -332,16 +644,16 @@
               <lines>
                 <line number="17" hits="0" branch="False" />
                 <line number="18" hits="0" branch="False" />
-                <line number="19" hits="0" branch="False" />
                 <line number="20" hits="0" branch="False" />
+                <line number="21" hits="0" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
             <line number="17" hits="0" branch="False" />
             <line number="18" hits="0" branch="False" />
-            <line number="19" hits="0" branch="False" />
             <line number="20" hits="0" branch="False" />
+            <line number="21" hits="0" branch="False" />
           </lines>
         </class>
         <class name="DinoServer.Controllers.UserController" filename="Controllers\UserController.cs" line-rate="0" branch-rate="1" complexity="1">
